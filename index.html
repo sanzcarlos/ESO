@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Declara soporte de tema claro y oscuro antes del primer render -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="ESO Interactiva: recursos y juegos para estudiar los contenidos de la ESO de forma práctica y divertida.">
+  <title>ESO Interactiva – Aprende jugando</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-logo" href="#inicio">ESO<span>Interactiva</span></a>
+
+      <nav class="site-nav" aria-label="Principal">
+        <button class="menu-button" type="button"
+                popovertarget="site-menu" popovertargetaction="toggle"
+                aria-controls="site-menu">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <span>Menú</span>
+        </button>
+
+        <ul id="site-menu" class="site-menu" popover="auto">
+          <li><a href="#inicio" aria-current="page">Inicio</a></li>
+          <li><a href="#asignaturas">Asignaturas</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a class="nav-cta" href="Geo/europe_map_quiz_v4.html">Probar el quiz</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <p class="eyebrow">Educación Secundaria Obligatoria</p>
+        <h1>Estudia la ESO <em>jugando</em></h1>
+        <p class="lead">
+          Aplicaciones interactivas para repasar los contenidos de cada asignatura:
+          mapas, cuestionarios con tiempo y práctica a tu ritmo. Sin registros ni instalaciones.
+        </p>
+        <p class="actions">
+          <a class="btn btn-primary" href="Geo/europe_map_quiz_v4.html">Jugar al mapa de Europa</a>
+          <a class="btn btn-secondary" href="#asignaturas">Ver asignaturas</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="features reveal" aria-labelledby="t-ventajas">
+      <h2 id="t-ventajas">Aprender se vuelve sencillo</h2>
+      <ul class="feature-list">
+        <li>
+          <span class="icon" aria-hidden="true">🎯</span>
+          <h3>Práctica activa</h3>
+          <p>Responde, localiza y corrige: se aprende mejor haciendo que leyendo.</p>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">⏱️</span>
+          <h3>Retos con tiempo</h3>
+          <p>Cronómetro y puntuación para convertir el repaso en un desafío.</p>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">📱</span>
+          <h3>En cualquier dispositivo</h3>
+          <p>Funciona en el móvil, la tableta o el ordenador, directamente desde el navegador.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="subjects" id="asignaturas" aria-labelledby="t-asignaturas">
+      <h2 id="t-asignaturas">Asignaturas</h2>
+      <p class="section-intro">Empezamos por Geografía; el resto llegará pronto.</p>
+
+      <div class="card-grid">
+        <article class="card reveal">
+          <span class="icon" aria-hidden="true">🗺️</span>
+          <h3><a class="card-link" href="Geo/europe_map_quiz_v4.html">Geografía</a></h3>
+          <p>Quiz del mapa de Europa: países, ríos, mares y accidentes geográficos.</p>
+          <footer><span class="badge badge-ok">Disponible</span></footer>
+        </article>
+
+        <article class="card reveal">
+          <span class="icon" aria-hidden="true">🏛️</span>
+          <h3>Historia</h3>
+          <p>Líneas del tiempo y personajes clave de cada época.</p>
+          <footer><span class="badge">Próximamente</span></footer>
+        </article>
+
+        <article class="card reveal">
+          <span class="icon" aria-hidden="true">➗</span>
+          <h3>Matemáticas</h3>
+          <p>Ejercicios autocorregibles de álgebra, geometría y funciones.</p>
+          <footer><span class="badge">Próximamente</span></footer>
+        </article>
+
+        <article class="card reveal">
+          <span class="icon" aria-hidden="true">🔬</span>
+          <h3>Ciencias</h3>
+          <p>Biología, física y química con experimentos y esquemas interactivos.</p>
+          <footer><span class="badge">Próximamente</span></footer>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps reveal" id="como-funciona" aria-labelledby="t-como">
+      <h2 id="t-como">Cómo funciona</h2>
+      <ol class="step-list">
+        <li><h3>Elige una asignatura</h3><p>Selecciona la actividad que quieres repasar.</p></li>
+        <li><h3>Juega y practica</h3><p>Resuelve el reto contra el reloj o a tu propio ritmo.</p></li>
+        <li><h3>Revisa tus fallos</h3><p>Vuelve a intentarlo y mejora tu puntuación.</p></li>
+      </ol>
+    </section>
+
+    <section class="cta reveal" aria-labelledby="t-cta">
+      <h2 id="t-cta">¿Listo para empezar?</h2>
+      <p>Pon a prueba tu geografía de Europa ahora mismo.</p>
+      <p class="actions">
+        <a class="btn btn-primary" href="Geo/europe_map_quiz_v4.html">Empezar el quiz</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year">2026</span> ESO Interactiva · Aplicación web de contenidos de la ESO.</p>
+  </footer>
+</body>
+</html>
