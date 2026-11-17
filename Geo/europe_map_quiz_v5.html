@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Declara tema claro y oscuro antes del primer render -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Quiz interactivo: sitúa en el mapa 14 mares, ríos, montañas, penínsulas e islas de Europa contra el reloj.">
+  <title>Quiz del mapa de Europa – ESO Interactiva</title>
+
+  <!-- Las dos texturas del mapa son críticas para el primer pintado: se descargan ya y con prioridad alta -->
+  <link rel="preload" href="assets/europe-land.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="assets/europe-sea.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="assets/europe-quiz.css">
+  <script src="assets/europe-data.js" defer></script>
+  <script src="assets/europe-map.js" defer></script>
+  <script src="assets/europe-quiz.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#viewport">Saltar al mapa</a>
+
+  <header class="topbar">
+    <a class="back" href="../index.html">← Inicio</a>
+    <h1><span aria-hidden="true">🗺️</span> Europa: quiz del mapa</h1>
+    <output id="timer" class="timer" role="timer" aria-label="Tiempo restante">15:00</output>
+    <div class="actions">
+      <button id="btnStart" class="btn btn-go" type="button">Nuevo ejercicio</button>
+      <button id="btnEnd" class="btn btn-end" type="button" disabled>Terminar</button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <main class="layout">
+      <section class="map-panel">
+        <div class="map-frame">
+          <!-- Inerte hasta que empieza el ejercicio: ni foco ni clics sobre el mapa -->
+          <div id="map-ui" inert>
+            <div id="viewport" role="application" tabindex="0"
+                 aria-label="Mapa de Europa. Flechas: mover el cursor. Intro: colocar. Más y menos: zoom."
+                 aria-describedby="kbd-help">
+              <svg id="map" viewBox="0 0 4352 2834" aria-hidden="true" focusable="false"
+                   xmlns="http://www.w3.org/2000/svg">
+                <!-- Mapa base vectorial: lo inserta europe-quiz.js desde assets/europe-map.js -->
+                <g id="basemap"></g>
+                <g id="answers"></g>
+                <g id="marks"></g>
+                <g id="kcursor"></g>
+              </svg>
+            </div>
+
+            <div class="toolbar" role="toolbar" aria-label="Controles del mapa">
+              <button id="zin" class="tool" type="button" aria-label="Acercar">+</button>
+              <button id="zout" class="tool" type="button" aria-label="Alejar">−</button>
+              <button id="zreset" class="tool sm" type="button" aria-label="Ver todo el mapa">⤢</button>
+              <span id="zlevel" class="zlevel">1×</span>
+              <button id="tin" class="tool sm" type="button" aria-label="Etiquetas más grandes">A+</button>
+              <button id="tout" class="tool sm" type="button" aria-label="Etiquetas más pequeñas">A−</button>
+            </div>
+          </div>
+
+          <div id="intro" class="overlay">
+            <div class="card">
+              <h2>Rasgos geográficos de Europa</h2>
+              <p>Recibirás <strong>14 lugares al azar</strong> (una cuarta parte de los 56).</p>
+              <p>Elige un lugar de la lista y haz clic en el mapa donde creas que está.
+                 Tienes <strong>15 minutos</strong>. Pulsa <strong>Terminar</strong> para ver las ubicaciones reales y tu puntuación.</p>
+              <button id="btnIntro" class="btn btn-go" type="button">Empezar ▶</button>
+            </div>
+          </div>
+        </div>
+        <noscript><p class="nojs">Este quiz necesita JavaScript para funcionar.</p></noscript>
+      </section>
+
+      <aside class="panel" aria-label="Lugares y resultados">
+        <p id="current" class="current">Pulsa <strong>Empezar</strong> para recibir tus lugares.</p>
+
+        <section id="result" class="result" tabindex="-1" aria-labelledby="result-title" hidden>
+          <h2 id="result-title">Resultado</h2>
+          <p id="score" class="score"></p>
+          <p class="legend-after">
+            <span class="ok-text">✔ acierto</span> · <span class="ko-text">✘ fallo</span><br>
+            La <strong>línea o punto amarillo</strong> es la ubicación real (ríos, cordilleras y mares se dibujan como su recorrido o extensión);
+            el círculo discontinuo es la zona aceptada.
+          </p>
+        </section>
+
+        <h2>Lugares a localizar</h2>
+        <ol id="qs" class="qs"></ol>
+
+        <details class="help" open>
+          <summary>Cómo se juega</summary>
+          <p>Selecciona un lugar de la lista y haz clic en el mapa. Puedes volver a hacer clic para mover la marca.</p>
+          <ul id="kbd-help">
+            <li><strong>Zoom:</strong> rueda del ratón, botones + / − o pellizco.</li>
+            <li><strong>Mover:</strong> arrastra el mapa. <strong>⤢</strong> muestra todo el mapa.</li>
+            <li><strong>Teclado:</strong> enfoca el mapa y usa las <kbd>flechas</kbd> para mover el cursor
+              (con <kbd>Mayús</kbd> va más rápido), <kbd>Intro</kbd> o <kbd>Espacio</kbd> para colocar,
+              <kbd>+</kbd> / <kbd>−</kbd> para el zoom y <kbd>0</kbd> para ver todo.</li>
+          </ul>
+        </details>
+
+        <h2>Leyenda</h2>
+        <ul class="catlegend">
+          <li><span class="cat" data-cat="W" aria-hidden="true">🌊</span> Océanos y mares</li>
+          <li><span class="cat" data-cat="R" aria-hidden="true">💧</span> Lagos y ríos</li>
+          <li><span class="cat" data-cat="M" aria-hidden="true">⛰️</span> Relieve (montañas, picos, llanuras)</li>
+          <li><span class="cat" data-cat="C" aria-hidden="true">🧭</span> Costas (penínsulas, estrechos, golfos, cabos)</li>
+          <li><span class="cat" data-cat="I" aria-hidden="true">🏝️</span> Islas</li>
+        </ul>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Región viva única para anuncios a lectores de pantalla -->
+  <div id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog id="confirm" closedby="any" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+    <form method="dialog">
+      <h2 id="confirm-title">¿Terminar el ejercicio?</h2>
+      <p id="confirm-text"></p>
+      <div class="dlg-actions">
+        <button class="btn btn-end" value="finish">Terminar igualmente</button>
+        <button class="btn btn-go" value="keep" autofocus>Seguir jugando</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
